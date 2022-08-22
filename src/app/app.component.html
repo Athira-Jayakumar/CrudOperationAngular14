@@ -2,30 +2,14 @@
   <!-- Sidebar -->
   <div id="sidebar">
     <header>
-      <a href="#">CrudOperation</a>
+      <a class='navbar-brand' [routerLink]="['/contact']"><h3><i>Crud_Operation</i></h3></a>
     </header>
     <ul class="nav">
-      
-        <a class="nav-link active">Contacts</a>
-      
+       <a class="nav-link active">
+         <span class='glyphicon glyphicon-home'></span><h4><i>Contacts</i></h4></a>
     </ul>
   </div>
-  <!-- Content -->
-  <div id="content">
-    <nav class="navbar navbar-default">
-      <div class="container">
-        <ul class="nav navbar-nav navbar-right">
-          
-            <a href="#"><i class="zmdi zmdi-notifications text-danger"></i>
-            </a>
-          
-        </ul>
-      </div>
-    </nav>
-    <div class="container">
-      <h1>Contact Details</h1>
-    </div>
-  </div>
-</div>
+  
 
-
+<app-contact-details></app-contact-details>
+<router-outlet></router-outlet>

@@ -1,4 +1,4 @@
-export interface Contact
+export interface updateContactRequest
 {
     id : string;
     firstName : string;
