@@ -13,28 +13,29 @@ import { updateContactRequest } from '../models/UpdateContactRequest.model';
 })
 export class ContactsService {
 
+  //baseApiUrl = 'https://localhost:7145/api/Contacts'
 
-  baseApiUrl : string = environment.baseApiUrl;
+  //baseApiUrl : string = environment.baseApiUrl;
   
   constructor(private http : HttpClient, private modalService: NgbModal) { }
 
   GetContacts(): Observable<Contact[]>
   {
-    return this.http.get<Contact[]>(this.baseApiUrl + '/api/Contacts/get');
+    return this.http.get<Contact[]>( 'https://localhost:7145/api/Contacts/get');
   }
 
   AddContact(contacts: Contact): Observable<addContactRequest>{
     
-    return this.http.post<addContactRequest>(this.baseApiUrl + '/api/Contacts/post',contacts);
+    return this.http.post<addContactRequest>('https://localhost:7145/api/Contacts/post',contacts);
   
   }
-  EditContact(contacts:Contact): Observable<updateContactRequest>{
+  EditContact(contact:Contact): Observable<updateContactRequest>{
 
-    return this.http.put<updateContactRequest>(this.baseApiUrl + '/api/Contacts/{id}',contacts);
+    return this.http.put<updateContactRequest>( 'https://localhost:7145/api/Contacts/'+contact.id,contact);
   }
-  DeleteContact(id : string):Observable<Contact[]>
+  DeleteContact(id:string):Observable<Contact>
   {
-    return this.http.delete<Contact[]>(this.baseApiUrl + 'api/Contacts/{id}');
+    return this.http.delete<Contact>('https://localhost:7145/api/Contacts/'+id);
   }
 }
 

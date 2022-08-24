@@ -17,7 +17,7 @@ import { updateContactRequest } from 'src/app/models/UpdateContactRequest.model'
 
 export class ContactDetailsComponent implements OnInit {
 
- 
+  contact :Contact[]=[];
   contacts :Contact[] = [] ;
   editForm !: FormGroup ;
   closeResult!: string;
@@ -25,7 +25,9 @@ export class ContactDetailsComponent implements OnInit {
   contentEdit:any;
   contentDelete: any;
   deleteId :any;
+  updateId:any;
   updatecontactRequest!:updateContactRequest;
+
   
   edit = true;
   add = false;
@@ -46,18 +48,24 @@ export class ContactDetailsComponent implements OnInit {
     phonenumber: 0
   }
   
-  baseApiUrl : string = environment.baseApiUrl;
+  //baseApiUrl : string = environment.baseApiUrl;
+  baseApiUrl = 'https://localhost:7145/api/Contacts/'
+
 
   constructor(private contactservice : ContactsService , 
     private modalService: NgbModal, private fb: FormBuilder,
     private messageService :MessageService) {  
       
       this.editForm = this.fb.group({
-        firstName: ['',Validators.required],
-        lastName: ['',Validators.required],
-        email: ['',Validators.required],
-       phonenumber: ['',Validators.required]
+        id: [''],
+        firstName: ['',[Validators.required]],
+        lastName: ['',[Validators.required]],
+        email: ['',[Validators.required,Validators.email]],
+       phonenumber: ['',[Validators.required]]
       });
+  }
+  get getControl(){
+    return this.editForm.controls;
   }
 
   ngOnInit(): void {
@@ -118,7 +126,7 @@ EditContact(targetModal: any, contacts:Contact)
     size :'lg'
   });
   this.editForm.patchValue({
-  
+    id:contacts.id,
     firstName:contacts.firstName,
     lastName:contacts.lastName,
     email:contacts.email,
@@ -136,17 +144,18 @@ EditContact(targetModal: any, contacts:Contact)
 
 UpdateContact()
 {
-  //   this.updatecontactRequest={
+    this.updateContactRequest={
 
-  //   id:this.editForm.value.id,
-  //   firstName:this.editForm.value.firstName,
-  //   lastName:this.editForm.value.lastName,
-  //   email:this.editForm.value.email,
-  //   phonenumber:this.editForm.value.phonenumber
-  // }
-   this.contactservice.EditContact(this.updatecontactRequest).subscribe(response => 
-    console.log(response));
+    id:this.editForm.value.id,
+    firstName:this.editForm.value.firstName,
+    lastName:this.editForm.value.lastName,
+    email:this.editForm.value.email,
+    phonenumber:this.editForm.value.phonenumber
+  }
+   this.contactservice.EditContact(this.updateContactRequest).subscribe(response => {
+    console.log(response);
     this.getContactDetails();
+   });
   //   this.resetValues();
   //this.contacts.push(this.updatecontactRequest);
   //this.resetValues();
@@ -159,24 +168,14 @@ DeleteContact(targetModal : any,contact:Contact) {
     size: 'lg'
   });
 }
-OnDelete(){
+OnDelete(id:string){
   
-  // const id = this.contacts.id;
-  //  this.contactservice.DeleteContact(this.contacts.id)
-  //   .subscribe(res => {
-  //     this.contacts = this.contacts.filter(contact => contact.id !== id);
-  //   }
-  //    );
+    this.contactservice.DeleteContact(id)
+     .subscribe(response => {
+      this.getContactDetails()
 
+     }
+     ); 
   
-     //const id = Contacts.id;
-    // console.log(this.Contacts);
-    // this.contactservice.DeleteContact(id).subscribe((Contacts: any) => console.log(Contacts))}
 }
 }
-// deletePost(id:number){
-//   this.postService.delete(id).subscribe(res => {
-//        this.posts = this.posts.filter(item => item.id !== id);
-//        console.log('Post deleted successfully!');
-//   })
-// }

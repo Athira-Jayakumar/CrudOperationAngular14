@@ -108,7 +108,7 @@
       </button>
     </div>
     <div class="modal-body">
-      <form  [formGroup]="editForm" >
+      <form  [formGroup]="editForm" novalidate>
         <!-- <div class="form-group">
             <label for="id">Id</label>
             <div class="input-group">
@@ -119,30 +119,57 @@
           <label for="firstName">Firstname</label>
           <div class="input-group">
             <input  formControlName="firstName" class="form-control" >
+            <div *ngIf="getControl['firstName'].touched && getControl['firstName'].invalid"
+            class ="alert alert-danger">
+            <div *ngIf = "getControl['firstName'].errors && getControl['firstName'].errors['required']">
+               *FirstName is required
+            </div>
+            </div>
           </div>
         </div>
+        <br>
         <div class="form-group">
           <label for="lastName">Lastname</label>
           <div class="input-group">
             <input  formControlName="lastName" class="form-control" >
+            <div *ngIf="getControl['lastName'].touched && getControl['lastName'].invalid"
+            class ="alert alert-danger">
+            <div *ngIf = "getControl['lastName'].errors && getControl['lastName'].errors['required']">
+              *LastName is required
+           </div>
+            </div>
           </div>
-        </div>
+        </div><br>
         <div class="form-group">
           <label for="email">Email</label>
           <div class="input-group">
             <input  formControlName="email" class="form-control" >
+            <div *ngIf="getControl['email'].touched && getControl['email'].invalid"
+              class ="alert alert-danger">
+             <div *ngIf="getControl['email'].errors && getControl['email'].errors['required']">
+               *Email is required
+              </div>
+             <div *ngIf="getControl['email'].errors && getControl['email'].errors['email']"> *Enter Valid Email</div>
+            </div>
           </div>
-        </div>
+        </div><br>
         <div class="form-group">
           <label for="phonenumber">Phone Number</label>
           <div class="input-group">
             <input  formControlName="phonenumber" class="form-control" >
+            <div *ngIf="getControl['phonenumber'].touched && getControl['phonenumber'].invalid"
+              class ="alert alert-danger">
+             <div *ngIf="getControl['phonenumber'].errors && getControl['phonenumber'].errors['required']">
+               *Enter Phone Number
+             </div>
+            </div> 
           </div>
         </div>
+        <br>
      </form>
     <div class="modal-footer">
       <div class="border text-center">
-        <button type="button" pButton pRipple (click)="[UpdateContact() , modal.close('Save click')]" label="Update" class="p-button-warning mb-2"></button>&nbsp; 
+        <button type="button" pButton pRipple (click)="[UpdateContact() , modal.close('Save click')]" label="Update" [disabled]="!editForm.valid" class="p-button-warning mb-2"></button>&nbsp; 
         <button type="button" pButton pRipple (click)="modal.close('Save click')" label="Cancel" class ="p-button-success mb-2"></button>
       </div>
     </div>
@@ -162,9 +189,9 @@
             <button data-dismiss="modal" class="btn btn-danger" (click)="OnDelete">Confirm</button> 
           </div> -->
         </div>
-        <div class="modal-footer">
-          <button type="button" pButton pRipple (click)="[OnDelete() , modal.close('Save click')]" label=" Yes Confirm" class="p-button-danger mb-2"></button>&nbsp;
-          <button type="button" pButton pRipple (click)="modal.close('Save click')" label="Cancel" class ="p-button-success mb-2"></button>
+        <div class="modal-footer" *ngFor ="let contact of contacts;let c=index">
+          <button type="button" pButton pRipple (click)="[OnDelete(contact.id) , modal.close('Save click')]" *ngIf="c<1" label=" Yes Confirm" class="p-button-danger mb-2"></button>&nbsp;
+          <button type="button" pButton pRipple (click)="modal.close('Save click')" label="Cancel" *ngIf="c<1" class ="p-button-success mb-2"></button>
         </div>
 </ng-template>
 
