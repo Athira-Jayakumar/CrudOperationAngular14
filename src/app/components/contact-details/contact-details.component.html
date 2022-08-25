@@ -95,8 +95,8 @@
     </div>
     <div class="modal-footer">
       <!-- <button type="button" class="btn btn-outline-dark" (click)="SaveContact()" >Save</button> -->
-      <button type="button" pButton pRipple (click)="[SaveContact() , modal.close('Save click')]" label="Save" class="p-button-success mb-2"></button>&nbsp;
-      <button type="button" pButton pRipple (click)="modal.close('Save click')" label="Cancel" class ="p-button-success mb-2"></button>
+      <button type="button" pButton pRipple (click)="[SaveContact(),Success(), modal.close('Save click')]" label="Save" class="p-button-success mb-2"></button>&nbsp;
+      <button type="button" pButton pRipple (click)="modal.close('Save click')" label="Cancel" class ="p-button-success mb-2" ></button>
     </div>
 </ng-template>
   <!-- for EditContactDetails -->
@@ -169,14 +169,15 @@
      </form>
     <div class="modal-footer">
       <div class="border text-center">
-        <button type="button" pButton pRipple (click)="[UpdateContact() , modal.close('Save click')]" label="Update" [disabled]="!editForm.valid" class="p-button-warning mb-2"></button>&nbsp; 
+        <button type="button" pButton pRipple (click)="[UpdateContact(),Updated() , modal.close('Save click')]" label="Update" [disabled]="!editForm.valid" class="p-button-info mb-2"></button>&nbsp; 
         <button type="button" pButton pRipple (click)="modal.close('Save click')" label="Cancel" class ="p-button-success mb-2"></button>
       </div>
     </div>
   </div>
 </ng-template>
     <!-- for deleteContactDetails -->
-<ng-template #contentDelete let-modal>
+<p-toast>
+ <ng-template #contentDelete let-modal>
         <div class="modal-header">
           <h4 class="modal-title">Confirm Delete</h4>
           <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
@@ -190,8 +191,9 @@
           </div> -->
         </div>
         <div class="modal-footer" *ngFor ="let contact of contacts;let c=index">
-          <button type="button" pButton pRipple (click)="[OnDelete(contact.id) , modal.close('Save click')]" *ngIf="c<1" label=" Yes Confirm" class="p-button-danger mb-2"></button>&nbsp;
+          <button type="button" pButton pRipple (click)="[OnDelete(contact.id),showError() , modal.close('Save click')]" *ngIf="c<1" label=" Yes Confirm" class="p-button-danger mb-2"></button>&nbsp;
           <button type="button" pButton pRipple (click)="modal.close('Save click')" label="Cancel" *ngIf="c<1" class ="p-button-success mb-2"></button>
         </div>
-</ng-template>
+ </ng-template>
+</p-toast>
 

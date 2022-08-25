@@ -8,10 +8,12 @@ import {TableModule} from 'primeng/table';
 import {ButtonModule} from 'primeng/button';
 import {RippleModule} from 'primeng/ripple';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule,FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ToastModule} from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 
 @NgModule({
@@ -31,10 +33,11 @@ import {ToastModule} from 'primeng/toast';
     FormsModule,
     NgbModule ,
     ReactiveFormsModule,
-    ToastModule
+    ToastModule,
+    BrowserAnimationsModule
     
   ],
-  providers: [],
+  providers: [MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

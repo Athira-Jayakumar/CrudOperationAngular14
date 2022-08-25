@@ -11,7 +11,6 @@ import { updateContactRequest } from 'src/app/models/UpdateContactRequest.model'
   selector: 'app-contact-details',
   templateUrl: './contact-details.component.html',
   styleUrls: ['./contact-details.component.css'],
-
   providers: [MessageService]
 })
 
@@ -83,8 +82,6 @@ export class ContactDetailsComponent implements OnInit {
       }
     });
   }
-  
-
    AddContact(content: any) {
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
@@ -104,17 +101,14 @@ private getDismissReason(reason: any): string {
 }
 SaveContact()
 {
-  // const data ={                                                                                                       
-  //   firstName : this.addContactRequest.firstName,
-  //   lastName : this.addContactRequest.lastName,
-  //   email : this.addContactRequest.email,
-  //   phonenumber : this.addContactRequest.phonenumber
- 
   this.contactservice.AddContact(this.addContactRequest).subscribe(response => {
     console.log(response)
     this.getContactDetails();
     
   });
+}
+Success()
+{
   this.messageService.add({severity:'success', summary: 'Success', detail: 'Successfully saved!'});
 }
 
@@ -133,14 +127,6 @@ EditContact(targetModal: any, contacts:Contact)
     phonenumber:contacts.phonenumber
   });
 }
-// resetValues(){
-//   this.updateContactRequest.firstName="";
-//   this.updateContactRequest.lastName="";
-//   this.updateContactRequest.email="";
-//   this.updateContactRequest.phonenumber=0;
-//   this.edit = true;
-//   this.add = false;
-// }
 
 UpdateContact()
 {
@@ -156,10 +142,10 @@ UpdateContact()
     console.log(response);
     this.getContactDetails();
    });
-  //   this.resetValues();
-  //this.contacts.push(this.updatecontactRequest);
-  //this.resetValues();
-  
+}
+Updated()
+{
+  this.messageService.add({severity:'info', summary: 'Info', detail: 'Updated Successfully!'});
 }
 DeleteContact(targetModal : any,contact:Contact) {
   this.deleteId = contact.id;
@@ -176,6 +162,8 @@ OnDelete(id:string){
 
      }
      ); 
-  
+}
+showError() {
+  this.messageService.add({severity:'error', summary: 'Error', detail: 'Deleted Successfully!'});
 }
 }
